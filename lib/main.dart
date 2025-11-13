@@ -6,11 +6,16 @@ import 'services/pokemon_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp().then((_) {
+  
+  // Inicializar Firebase y esperar a que se complete antes de continuar
+  try {
+    await Firebase.initializeApp();
     debugPrint('Firebase inicializado correctamente');
-  }).catchError((error) {
-    debugPrint('Error al inicializar Firebase: $error');
-  });
+  } catch (e, stackTrace) {
+    debugPrint('Error al inicializar Firebase: $e');
+    debugPrint('Stack trace: $stackTrace');
+    // Si Firebase falla, la app puede continuar pero sin funcionalidad de Firebase
+  }
   
   runApp(MyApp());
 }
