@@ -6,7 +6,12 @@ import 'services/pokemon_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  Firebase.initializeApp().then((_) {
+    debugPrint('Firebase inicializado correctamente');
+  }).catchError((error) {
+    debugPrint('Error al inicializar Firebase: $error');
+  });
+  
   runApp(MyApp());
 }
 

@@ -39,6 +39,7 @@ class FirebaseService {
     try {
       final querySnapshot = await _firestore.collection(_collectionName).get();
       return querySnapshot.docs
+          .where((doc) => doc.exists && doc.data().isNotEmpty)
           .map((doc) => Pokemon.fromFirestore(doc.data()))
           .toList();
     } catch (e) {
@@ -77,6 +78,7 @@ class FirebaseService {
         .collection(_collectionName)
         .snapshots()
         .map((snapshot) => snapshot.docs
+            .where((doc) => doc.exists && doc.data().isNotEmpty)
             .map((doc) => Pokemon.fromFirestore(doc.data()))
             .toList());
   }
